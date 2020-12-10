@@ -59,9 +59,9 @@ def get_token_auth_header():
 
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
-                        raise AuthError({
-                            'code': 'invalid_claims',
-                            'description': 'Permissions not included in JWT.'
+        raise AuthError({
+                        'code': 'invalid_claims',
+                        'description': 'Permissions not included in JWT.'
                         }, 400)
 
     if permission not in payload['permissions']:
@@ -132,7 +132,7 @@ def requires_auth(permission=''):
             token = get_token_auth_header()
             try:
                 payload = verify_decode_jwt(token)
-            except:
+            except Exception:
                 abort(401)
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)

@@ -43,17 +43,20 @@ class TriviaTestCase(unittest.TestCase):
         """Executed after reach test"""
         pass
 
+    """ test /actor end point """
     def test_get_actors(self):
         res = self.client().get('/actors',
                                 headers={'Authorization':
                                          'Bearer '+self.exec_prod})
         self.assertEqual(res.status_code, 200)
 
+    """ test /actor end point with a false token """
     def test__not_get_actors(self):
         res = self.client().get('/actors',
                                 headers={'Authorization': 'Bearer 1234'})
         self.assertEqual(res.status_code, 401)
 
+    """ test /movies end point """
     def test_get_movies(self):
         res = self.client().get('/movies',
                                 headers={'Authorization':
@@ -65,6 +68,7 @@ class TriviaTestCase(unittest.TestCase):
                                                     'Bearer 1234'})
         self.assertEqual(res.status_code, 401)
 
+    """ test /movies end point """
     def test_get_actorsmovie(self):
         res = self.client().get('/movies/1',
                                 headers={'Authorization':
@@ -78,6 +82,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
 
 # Post end points
+    """ test /actor end point with good token and data """
     def test_add_actors(self):
         res = self.client().post('/actors',
                                  headers={'Authorization':
@@ -85,12 +90,14 @@ class TriviaTestCase(unittest.TestCase):
                                  json=self.new_actor)
         self.assertEqual(res.status_code, 200)
 
+    """ test /actor end point with bad token"""
     def test__not_add_actors(self):
         res = self.client().post('/actors',
                                  headers={'Authorization': 'Bearer 1234'},
                                  json=self.new_actor)
         self.assertEqual(res.status_code, 401)
 
+    """ test /movies end point with good token and data """
     def test_add_movies(self):
         res = self.client().post('/movies',
                                  headers={'Authorization':
@@ -117,7 +124,7 @@ class TriviaTestCase(unittest.TestCase):
                                  json={"id": 1})
         self.assertEqual(res.status_code, 401)
 
-# PATCH end points ###
+    """ test all update end point """
     def test_update_actors(self):
         res = self.client().patch('/actors/1',
                                   headers={'Authorization':
@@ -144,7 +151,7 @@ class TriviaTestCase(unittest.TestCase):
                                   json=self.update_movie)
         self.assertEqual(res.status_code, 401)
 
-# DELETE end points ###
+    """ test all delete end point for /actors, /movies, /movie_actors"""
     def test_del_actors(self):
         res = self.client().delete('/actors/6',
                                    headers={'Authorization':
@@ -183,6 +190,7 @@ class TriviaTestCase(unittest.TestCase):
                                    headers={'Authorization': 'Bearer 1234'},
                                    json={"id": 1})
         self.assertEqual(res.status_code, 401)
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
