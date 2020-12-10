@@ -117,10 +117,10 @@ export FLASK_APP=app
 export FLASK_ENV=development
 flask run
 
-- Endpoints
+# Endpoints
 The Host for the endpoints is: https://yosritestapp.herokuapp.com/
 
-OR https://localhost:5000/ if the flask app is being run locally.
+OR http://localhost:5000/ if the flask app is being run locally.
 
 Index /
 The index endpoint that indicates the Flask Application is running normally.
@@ -312,7 +312,7 @@ where id is the existing model id it responds with a 404 error if id is not foun
 }
 where id is the id of the deleted record
 
-##
+
 GET /movies/<int:id>
 Returns a  list of actors foreach movie 
 It is an endpoint available to all three roles
@@ -375,7 +375,7 @@ where id is the existing movie id it responds with a 404 error if id is not foun
 where id is the id of the deleted record
 
 
-## Testing
+# Testing
 To run the tests, run
 ```
 1 - Dropdb capstone
@@ -385,8 +385,7 @@ To run the tests, run
         Dropdb capstonetest,write this request CREATEdb capstone WITH TEMPLATE=capstone;
 3 - python test_flaskr.py
 ```
-##
-Roles and Permissions
+# Roles and Permissions
 
 I/ Permssions :
 - get:movies	gettinig informations from movies	
