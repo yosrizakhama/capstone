@@ -8,8 +8,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column as c
 from flask_migrate import Migrate
 
-# database_path = os.environ['DATABASE_PATH']   # --for local server
-database_path = os.environ['DATABASE_URL']
+database_path = os.environ['DATABASE_PATH']   # --for local server
+# database_path = os.environ['DATABASE_URL']
 db = SQLAlchemy()
 migrate = Migrate()
 Base = declarative_base()
@@ -58,7 +58,7 @@ class Actor(db.Model):
         try:
             actor_movie = ActorMovie.delete().where(actor_id == self.id)
             db.engine.execute(actor_movie)
-        except:
+        except Exception:
             print("not OK")
         db.session.delete(self)
         db.session.commit()
@@ -85,7 +85,7 @@ class Movie(db.Model):
     def insert(self):
         try:
             max = db.session.query(func.max(Movie.id)).scalar()+1
-        except:
+        except Exception:
             max = 1
         self.id = max
         db.session.add(self)
@@ -98,7 +98,7 @@ class Movie(db.Model):
         try:
             actor_movie = ActorMovie.delete().where(movie_id == self.id)
             db.engine.execute(actor_movie)
-        except:
+        except Exception:
             print("not OK")
         db.session.delete(self)
         db.session.commit()

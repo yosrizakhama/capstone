@@ -1,13 +1,18 @@
-Udacity Full-Stack Developer Nanodegree Capstone Project
+    Udacity Full-Stack Developer Nanodegree Capstone Project
+# description :
 This project is the final project for my Udacity FullStack Developer Nanodegree.
-The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
+# Motivation for the project 
+1- The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. 
+
+2- I create a system to simplify and streamline the process of creating movies and managing and assigning actors to those movies for the  executive Producer of the company.
 This Application does not have a frontend implemented. It is a API REST.
 
+# Link
 Application Heroku Link
 https://yosritestapp.herokuapp.com/
 
-Application Stack
+# Application Stack
 The Application Tech Stack includes:
 
 Python3: The server language
@@ -15,61 +20,104 @@ Flask: Server Framework
 PostgreSQL: Database of choice
 SQLAlchemy: ORM of choice to communicate between the python server and the Postgres Database. Flask SQLAlchemy is directly used.
 Heroku: Deployment Platform
-Application Dependencies
-Library	Version
-alembic	1.4.2
-click	7.1.2
-ecdsa	0.15
-Flask	1.1.2
-Flask-Cors	3.0.8
-Flask-Migrate	2.5.3
-Flask-Moment	0.10.0
-Flask-Script	2.0.6
-Flask-SQLAlchemy	2.4.4
-future	0.18.2
-gunicorn	20.0.4
-itsdangerous	1.1.0
-Jinja2	2.11.2
-jose	1.0.0
-Mako	1.1.3
-MarkupSafe	1.1.1
-psycopg2-binary	2.8.5
-pyasn1	0.4.8
-pycryptodome	3.3.1
-python-dateutil	2.8.1
-python-editor	1.0.4
-python-jose	3.1.0
-python-jose-cryptodome	1.3.2
-rsa	4.6
-six	1.15.0
-SQLAlchemy	1.3.18
-Werkzeug	1.0.1
-Working with the application locally
-Make sure you have Python installed.
 
-Clone the Repository
+# Application Dependencies
+Library	Version
+alembic==1.4.3
+aniso8601==6.0.0
+atomicwrites==1.4.0
+attrs==20.3.0
+autopep8==1.5.4
+awscli==1.18.179
+Babel==2.8.0
+backcall==0.2.0
+botocore==1.19.19
+Click==7.0
+colorama==0.4.3
+cycler==0.10.0
+decorator==4.4.2
+docutils==0.15.2
+ecdsa==0.14.1
+Flask==1.0.3
+Flask-Cors==3.0.7
+Flask-Migrate==2.5.3
+Flask-Moment==0.10.0
+Flask-RESTful==0.3.7
+Flask-Script==2.0.6
+Flask-SQLAlchemy==2.4.0
+Flask-WTF==0.14.3
+gunicorn==20.0.4
+iniconfig==1.1.1
+ipython-genutils==0.2.0
+itsdangerous==1.1.0
+jedi==0.17.2
+Jinja2==2.10.1
+jmespath==0.10.0
+kiwisolver==1.2.0
+lazy-object-proxy==1.4.0
+Mako==1.1.3
+MarkupSafe==1.1.1
+matplotlib==3.2.2
+numpy==1.18.5
+packaging==20.4
+parso==0.7.1
+pep8==1.7.1
+pickleshare==0.7.5
+pluggy==0.13.1
+prompt-toolkit==3.0.7
+psycopg2==2.8.5
+psycopg2-binary==2.8.5
+py==1.9.0
+pyasn1==0.4.8
+pycodestyle==2.6.0
+pycryptodome==3.9.8
+Pygments==2.7.1
+PyJWT==1.7.1
+pyparsing==2.4.7
+pytest==6.1.2
+python-dateutil==2.6.0
+python-editor==1.0.4
+python-jose==3.2.0
+pytz==2019.1
+PyYAML==5.3.1
+rsa==4.5
+s3transfer==0.3.3
+scipy==1.4.1
+six==1.12.0
+SQLAlchemy==1.3.19
+toml==0.10.1
+urllib3==1.25.11
+wcwidth==0.2.5
+Werkzeug==0.14.1
+wrapt==1.11.1
+WTForms==2.3.3
+
+# Working with the application locally
+- Make sure you have Python installed.
+
+- Clone the Repository
 
 git clone -b master https://github.com/yosrizakhama/capstone.git
 
-Install Dependencies:
+- Install Dependencies:
 
 pip install -r requirements.txt
-Export Environment Variables Refer to the setup.bash file and export the environment variables for the project.
+- Export Environment Variables Refer to the setup.bash file and export the environment variables for the project.
 
-Create Local Database: Create a local database and export the database URI as an environment variable with the key DATABASE_PATH.
+- Create Local Database: Create a local database and export the database URI as an environment variable with the key DATABASE_PATH.
 
-Run Database Migrations:
+- Run Database Migrations:
 
 python manage.py db init
 python manage.py db migrate
 python manage.py db upgrade
 Run the Flask Application locally:
-
+- Run application :
 export FLASK_APP=app
 export FLASK_ENV=development
 flask run
 
-Endpoints
+- Endpoints
 The Host for the endpoints is: https://yosritestapp.herokuapp.com/
 
 OR https://localhost:5000/ if the flask app is being run locally.

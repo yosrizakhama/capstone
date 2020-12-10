@@ -6,7 +6,8 @@ from auth.auth import AuthError, requires_auth
 
 
 def create_app(test_config=None):
-
+    """ name, genre and age must be present in data and must have
+    a values not a None"""
     def test_data_actor(data):
         if 'name' not in data:
             abort(422)
@@ -21,6 +22,8 @@ def create_app(test_config=None):
         if data.get('age') is None:
             abort(400)
 
+    """ title, and date must be present in data and must have
+    a values not a None"""
     def test_data_movie(data):
         if 'title' not in data:
             abort(422)
@@ -31,18 +34,21 @@ def create_app(test_config=None):
         if data.get('date') is None:
             abort(400)
 
+    """ The index endpoint that indicates the Flask Application
+    is running normally. """
     @app.route('/', methods=['GET'])
     def salut():
         return "app running ok "
-###
 
+    """ Returns a  list of actors It is an endpoint available
+    to all three roles """
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
     def get_actors(payload):
         try:
             list_actors = Actor.query.all()
             actors_res = [act.__repr__() for act in list_actors]
-        except:
+        except Exception:
             abort(404)
         return jsonify({
             "success": True,
@@ -52,13 +58,14 @@ def create_app(test_config=None):
             "nbr_actors": len(actors_res)
         })
 
-#
+    """ It takes new actor details as a JSON body Only the manager
+    and admin can perform this action """
     @app.route('/actors', methods=['POST'])
     @requires_auth('put:actors')
     def add_actors(payload):
         try:
             data = request.get_json()
-        except:
+        except Exception:
             abort(405)
         if data is not None:
             n = data['name']
@@ -77,13 +84,14 @@ def create_app(test_config=None):
             "actors": [actor.__repr__()]
         })
 
-#
+    """ only for admin or manager
+    It takes the actor id to be patched, and It takes new informations """
     @app.route('/actors/<int:id>', methods=['PATCH'])
     @requires_auth('update:actors')
     def update_actors(payload, id):
         try:
             actor = Actor.query.filter(Actor.id == int(id)).one_or_none()
-        except:
+        except Exception:
             abort(405)
         data = request.get_json()
         if data is not None and actor is not None:
@@ -102,14 +110,17 @@ def create_app(test_config=None):
             "actor": actor.__repr__()
         })
 
-#
+    """ where id is the existing model id, it responds with
+    a 404 error if id is not found
+    it deletes the corresponding row for id.Only admin can
+    perform this action """
     @app.route('/actors/<int:id>', methods=['DELETE'])
     @requires_auth('delete:actors')
     def delete_actor(payload, id):
         try:
             actor = Actor.query.filter(Actor.id == int(id)).one_or_none()
             actor.delete()
-        except:
+        except Exception:
             abort(404)
         return jsonify({
             "success": True,
@@ -118,14 +129,15 @@ def create_app(test_config=None):
             "id": id
         })
 
-#
+    """ Returns a  list of movies. It is an endpoint available
+    to all three roles """
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movies(payload):
         try:
             list_movies = Movie.query.all()
             movies_res = [act.__repr__() for act in list_movies]
-        except:
+        except Exception:
             abort(404)
         return jsonify({
             "success": True,
@@ -135,13 +147,13 @@ def create_app(test_config=None):
             "nbr_movies": len(movies_res)
         })
 
-#
+    """ only for admin or manager. It takes new movie details as a JSON body"""
     @app.route('/movies', methods=['POST'])
     @requires_auth('put:movies')
     def add_movies(payload):
         try:
             data = request.get_json()
-        except:
+        except Exception:
             abort(405)
         if data is not None:
             test_data_movie(data)
@@ -156,13 +168,15 @@ def create_app(test_config=None):
             "movies": [movie.__repr__()]
         })
 
-#
+    """ only for admin or manager. It takes the movie id to be patched,
+    for example:
+    https://yosritestapp.herokuapp.com/actors/4 """
     @app.route('/movies/<int:id>', methods=['PATCH'])
     @requires_auth('update:movies')
     def update_movies(payload, id):
         try:
             movie = Movie.query.filter(Movie.id == int(id)).one_or_none()
-        except:
+        except Exception:
             abort(405)
         data = request.get_json()
         if data is not None and movie is not None:
@@ -180,14 +194,16 @@ def create_app(test_config=None):
             "movie": movie.__repr__()
         })
 
-#
+    """ only for admin where id is the existing model id it responds with
+    a 404 error, if id is not found it deletes the corresponding row for
+    id returns status code 200 """
     @app.route('/movies/<int:id>', methods=['DELETE'])
     @requires_auth('delete:movies')
     def delete_movies(payload, id):
         try:
             movie = Movie.query.filter(Movie.id == int(id)).one_or_none()
             movie.delete()
-        except:
+        except Exception:
             abort(404)
         return jsonify({
             "success": True,
@@ -196,7 +212,9 @@ def create_app(test_config=None):
             "id": id
         })
 
-#
+    """ Returns a  list of actors foreach movie,it is an endpoint available
+    to all three roles id is integer refer to the id of the movie
+    When successful, It returns a status code of 200 """
     @app.route('/movies/<int:id>', methods=['GET'])
     @requires_auth('get:movie_actors')
     def get_movies_act(payload, id):
@@ -211,7 +229,7 @@ def create_app(test_config=None):
                 querie = Actor.query
                 act = querie.filter(Actor.id == mv_act.actor_id).one_or_none()
                 movies_res.append(act.__repr__())
-        except:
+        except Exception:
             abort(404)
         return jsonify({
             "success": True,
@@ -221,7 +239,9 @@ def create_app(test_config=None):
             "nbr_movies": len(movies_res)
         })
 
-#
+    """ only for admin or manager
+    It takes the id actor to add as an actor in the movie
+    details as a JSON body """
     @app.route('/movies/<int:id>', methods=['POST'])
     @requires_auth('add:actors_movie')
     def add_actor_movies(payload, id):
@@ -240,7 +260,7 @@ def create_app(test_config=None):
                     abort(405)
             else:
                 abort(405)
-        except:
+        except Exception:
             abort(405)
         return jsonify({
             "success": True,
@@ -249,14 +269,17 @@ def create_app(test_config=None):
             "movies": id
         })
 
-#
+    """ only for admin
+    where id is the existing movie id it responds with a 404 error,
+    if id is not found it deletes the corresponding row for id
+    returns status code 200 """
     @app.route('/movie_actors/<int:id>', methods=['DELETE'])
     @requires_auth('del:actors_movie')
     def del_actor_movies(payload, id):
         try:
             mov_act = ActorMovie.delete().where('actormovie.movie_id' == id)
             db.engine.execute(mov_act)
-        except:
+        except Exception:
             abort(404)
         return jsonify({
             "success": True,
@@ -265,6 +288,7 @@ def create_app(test_config=None):
             "movies": id
         })
     return app
+
 
 APP = create_app()
 
